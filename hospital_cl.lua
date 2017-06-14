@@ -52,9 +52,9 @@ Citizen.CreateThread(function()
             end
         end
         if treatment == true then
-	        Citizen.Wait(15000)
+	    Citizen.Wait(15000)
             time = true
-	    end
+	end
         if treatment == true and time == true and (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 338.85,-1394.56,32.50, true) <= 2) then
             TriggerServerEvent('hopital:prix')
             SetEntityHealth(GetPlayerPed(-1), 200)
@@ -67,7 +67,7 @@ Citizen.CreateThread(function()
             treatment = false
             time = false            
         end        
-	end
+    end
 end)
 
 
