@@ -44,8 +44,8 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-		if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 338.85,-1394.56,32.50, true) <= 2 then
-           ShowInfo('Appuyer sur ~INPUT_VEH_HORN~ pour vous soigner ~r~(~h~~g~500$~r~)', 0)
+	if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 338.85,-1394.56,32.50, true) <= 2 then
+            ShowInfo('Appuyer sur ~INPUT_VEH_HORN~ pour vous soigner ~r~(~h~~g~500$~r~)', 0)
             if (IsControlJustPressed(1,38)) and (GetEntityHealth(GetPlayerPed(-1)) < 200) and (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), 338.85,-1394.56,32.50, true) <= 2) then
                 Notify("A ~h~~g~doctor ~s~will ~h~~r~treat~s~ you, ~h~~b~be patient~s~.")
                 treatment = true
