@@ -29,6 +29,29 @@ function ShowInfo(text, state)
 end
 
 
+function ConfigLang(lang)
+  local lang = lang
+  if lang == "FR" then
+    lang_string = {
+      text1 = "Appuyer sur ~INPUT_VEH_HORN~ pour être soigné ~r~(~h~~g~500$~r~)",
+      text2 = "Un ~h~~g~docteur ~s~va te ~h~~r~soigner~s~, ~h~~b~soit patient~s~.",
+      text3 = "Tu n'as pas besoin d'être ~h~~r~soigner~s~.",
+      text4 = "Tu as été ~h~~r~soigné~s~.",
+      text5 = "Tu as ~h~~r~bougé~s~, le ~h~~g~docteur~s~ n'as pas pu te ~h~~r~soigner~s~ !",
+  }
+
+  elseif lang == "EN" then
+    lang_string = {
+      text1 = "Press ~INPUT_VEH_HORN~ to be treated ~r~(~h~~g~500$~r~)",
+      text2 = "A ~h~~g~doctor ~s~will ~h~~r~treat~s~ you, ~h~~b~be patient~s~.",
+      text3 = "You don't need ~h~~r~treatment~s~.",
+      text4 = "A ~h~~g~doctor ~h~~r~treated~s~ you.",
+      text5 = "~h~You have ~h~~r~moved away~s~, the ~h~~g~doctor~s~ could not ~h~~r~heal~s~ you !",
+  }
+  end
+end
+
+
 ---------- CITIZEN ----------
 
 Citizen.CreateThread(function()
@@ -51,15 +74,15 @@ Citizen.CreateThread(function()
 	  if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), item.x, item.y, item.z, true) <= 20 then
         DrawMarker(0, item.x, item.y, item.z, 0, 0, 0, 0, 0, 0, 2.001, 2.0001, 0.5001, 0, 155, 255, 200, 0, 0, 0, 0)
         if GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), item.x,item.y,item.z, true) <= 2 then
-          ShowInfo('Pres ~INPUT_VEH_HORN~ to be treated ~r~(~h~~g~500$~r~)', 0)
+          ShowInfo(lang_string.text1, 0)
           if (IsControlJustPressed(1,38)) and (GetEntityHealth(GetPlayerPed(-1)) < 200) and (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), item.x, item.y, item.z, true) <= 2) then
-            Notify("A ~h~~g~doctor ~s~will ~h~~r~treat~s~ you, ~h~~b~be patient~s~.")
+            Notify(lang_string.text2)
             treatment = true
           end
         end
       end
       if (IsControlJustPressed(1,38)) and (GetEntityHealth(GetPlayerPed(-1)) == 200) and (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), item.x, item.y, item.z, true) <= 2) then
-        Notify("You don't need ~h~~r~treatment~s~.")
+        Notify(lang_string.text3)
       end
       if treatment == true then
 	    Citizen.Wait(15000)
@@ -68,12 +91,12 @@ Citizen.CreateThread(function()
       if treatment == true and timer == true and (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), item.x, item.y, item.z, true) <= 2) then
         TriggerServerEvent('hospital:price')
         SetEntityHealth(GetPlayerPed(-1), 200)
-        Notify("A ~h~~g~doctor ~h~~r~treated~s~ you.")
+        Notify(lang_string.text4)
         treatment = false
         timer = false
       end
       if treatment == true and timer == true and (GetDistanceBetweenCoords(GetEntityCoords(GetPlayerPed(-1)), item.x, item.y, item.z, true) > 2) then
-        Notify("You have ~h~~r~moved away~s~, the ~h~~g~doctor~s~ could not ~h~~r~heal~s~ you!")
+        Notify(lang_string.text5)
         treatment = false
         timer = false            
       end
@@ -81,6 +104,11 @@ Citizen.CreateThread(function()
   end       
 end)
 
+
+AddEventHandler("playerSpawned", function()
+    local lang = "EN"
+    ConfigLang(lang)
+end)
 
 ---------- CREATE BY BOARO ----------
 
