@@ -110,7 +110,7 @@ AddEventHandler("playerSpawned", function()
     ConfigLang(lang)
 end)
 
----------- CREATE BY BOARO ----------
+---------- CREATED BY BOARO ----------
 
 
 ---------- RUINER ISLAND ----------
