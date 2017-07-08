@@ -34,7 +34,7 @@ function ConfigLang(lang)
   if lang == "FR" then
     lang_string = {
       text1 = "Appuyer sur ~INPUT_VEH_HORN~ pour être soigné ~r~(~h~~g~500$~r~)",
-      text2 = "Un ~h~~g~docteur ~s~va te ~h~~r~soigner~s~, ~h~~b~soit patient~s~.",
+      text2 = "Le ~h~~g~docteur ~s~va te ~h~~r~soigner~s~, ~h~~b~soit patient~s~.",
       text3 = "Tu n'as pas besoin d'être ~h~~r~soigner~s~.",
       text4 = "Tu as été ~h~~r~soigné~s~.",
       text5 = "Tu as ~h~~r~bougé~s~, le ~h~~g~docteur~s~ n'as pas pu te ~h~~r~soigner~s~ !",
@@ -43,9 +43,9 @@ function ConfigLang(lang)
   elseif lang == "EN" then
     lang_string = {
       text1 = "Press ~INPUT_VEH_HORN~ to be treated ~r~(~h~~g~500$~r~)",
-      text2 = "A ~h~~g~doctor ~s~will ~h~~r~treat~s~ you, ~h~~b~be patient~s~.",
+      text2 = "The ~h~~g~doctor ~s~will ~h~~r~treat~s~ you, ~h~~b~be patient~s~.",
       text3 = "You don't need ~h~~r~treatment~s~.",
-      text4 = "A ~h~~g~doctor ~h~~r~treated~s~ you.",
+      text4 = "The ~h~~g~doctor ~h~~r~treated~s~ you.",
       text5 = "~h~You have ~h~~r~moved away~s~, the ~h~~g~doctor~s~ could not ~h~~r~heal~s~ you !",
   }
   end
@@ -102,6 +102,20 @@ Citizen.CreateThread(function()
       end
     end 
   end       
+end)
+
+Citizen.CreateThread(function()
+    
+    RequestModel(GetHashKey("s_m_m_doctor_01"))
+    while not HasModelLoaded(GetHashKey("s_m_m_doctor_01")) do
+      Wait(1)
+    end
+
+      local hospitalped =  CreatePed(4, 0xd47303ac, 338.85, -1394.56, 31.51, 49.404, false, true)
+      SetEntityHeading(hospitalped, 49.404)
+      FreezeEntityPosition(hospitalped, true)
+      SetEntityInvincible(hospitalped, true)
+      SetBlockingOfNonTemporaryEvents(hospitalped, true)
 end)
 
 
